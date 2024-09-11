@@ -31,7 +31,7 @@
 .explosion-electric-flash {
 	position: absolute;
 	border-radius: 50%;
-	background-image: url('/images/electric_discharge.png'), radial-gradient(circle, rgba(255,255,255,0.5), rgba(0,0,255,0) 60%);
+	background-image: url('../images/electric_discharge.png'), radial-gradient(circle, rgba(255,255,255,0.5), rgba(0,0,255,0) 60%);
 	/*background-image: url('/images/electric_discharge.png');*/
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -59,7 +59,7 @@
 .balloon-pop {
     position: absolute;
     border-radius: 50%;
-	background-image: url('/images/enemy_yarovaya_package_pop.png'), radial-gradient(circle, rgba(255,255,255,0.5), rgba(255,255,255,0) 60%);
+	background-image: url('../images/enemy_yarovaya_package_pop.png'), radial-gradient(circle, rgba(255,255,255,0.5), rgba(255,255,255,0) 60%);
     width: 100px;
     height: 100px;
     transform: translate(0%, 0%) scale(1);

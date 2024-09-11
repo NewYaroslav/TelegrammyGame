@@ -17,7 +17,7 @@
 	width: 24px;
 	height: 24px;
 	margin-left: 5px;
-	background-image: url('/images/hud_heart.png');
+	background-image: url('../images/hud_heart.png');
 	background-size: cover;
 	animation: hud-heart-float 2s ease-in-out infinite;
 }
