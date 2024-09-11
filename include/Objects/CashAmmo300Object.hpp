@@ -51,7 +51,7 @@ private:
 
     void play_pickup() {
         EM_ASM({
-            const soundСashRegister = new Audio('/sounds/cash_register.mp3');
+            const soundСashRegister = new Audio('../sounds/cash_register.mp3');
             soundСashRegister.loop = false;
             soundСashRegister.addEventListener('ended', function() {
                 this.remove();
