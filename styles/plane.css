@@ -57,6 +57,7 @@
 
 .plane-wings, .plane-body {
 	transform: translate(-5%, -27%);
+	z-index: 4;
 }
 
 @keyframes airflow-animation {
