@@ -285,17 +285,17 @@ private:
     // Генерация боеприпасов
     void generate_cash_ammo() {
         const double ammo_spawn_rate =
-            m_game_progress < 40  ? 0.001 :
+            m_game_progress < 40  ? 0.005 :
             m_game_progress < 50  ? 0.025 :
-            m_game_progress < 100 ? 0.001 :
+            m_game_progress < 100 ? 0.020 :
             m_game_progress < 150 ? 0.010 :
-            m_game_progress < 200 ? 0.005 :
+            m_game_progress < 200 ? 0.020 :
             m_game_progress < 250 ? 0.012 :
-            m_game_progress < 300 ? 0.005 :
+            m_game_progress < 300 ? 0.020 :
             m_game_progress < 350 ? 0.015 :
-            m_game_progress < 400 ? 0.007 :
-            m_game_progress < 450 ? 0.025 :
-            m_game_progress < 500 ? 0.010 :
+            m_game_progress < 400 ? 0.025 :
+            m_game_progress < 450 ? 0.035 :
+            m_game_progress < 500 ? 0.020 :
             0.03;
 
         if (m_dist_chance(m_rnd_gen) < ammo_spawn_rate) {
