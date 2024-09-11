@@ -1,0 +1,281 @@
+.explosion {
+	position: absolute; /* Позволяет управлять координатами через left/top */
+	width: 100px;
+	height: 100px;
+	transform: translate(0%, 0%);
+}
+
+.explosion-flash {
+	position: absolute;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(255,0,0,0.9), rgba(255,200,0,0.8) 50%, rgba(255,255,255,0) 100%);
+	width: 100px;
+	height: 100px;
+	transform: translate(0%, 0%) scale(1);
+	pointer-events: none;
+	opacity: 0;
+}
+
+.explosion-smoke {
+	position: absolute;
+	border-radius: 50%;
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 100px;
+	height: 100px;
+	transform: translate(0%, 0%) scale(1);
+	pointer-events: none;
+	opacity: 0;
+}
+
+/* Анимация электрического взрыва */
+.explosion-electric-flash {
+	position: absolute;
+	border-radius: 50%;
+	background-image: url('/images/electric_discharge.png'), radial-gradient(circle, rgba(255,255,255,0.5), rgba(0,0,255,0) 60%);
+	/*background-image: url('/images/electric_discharge.png');*/
+	background-size: contain;
+	background-repeat: no-repeat;
+	filter: drop-shadow(0 0 20px rgba(255,255,255, 0.5)); 
+	/* background: radial-gradient(circle, rgba(255,255,255,1), rgba(0,0,255,0) 60%); */
+	width: 100px;
+	height: 100px;
+	transform: scale(1);
+	pointer-events: none;
+	opacity: 0;
+}
+
+.explosion-electric-glow {
+	position: absolute;
+	border-radius: 50%;
+	background-color: rgba(0, 155, 255, 0.25);
+	width: 100px;
+	height: 100px;
+	transform: scale(1);
+	pointer-events: none;
+	opacity: 0;
+}
+
+/* Анимация лопанья шарика */
+.balloon-pop {
+    position: absolute;
+    border-radius: 50%;
+	background-image: url('/images/enemy_yarovaya_package_pop.png'), radial-gradient(circle, rgba(255,255,255,0.5), rgba(255,255,255,0) 60%);
+    width: 100px;
+    height: 100px;
+    transform: translate(0%, 0%) scale(1);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.balloon-pop-smoke {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(128, 128, 128, 0.5); /* Полупрозрачный серый цвет */
+    width: 100px;
+    height: 100px;
+    transform: translate(0%, 0%) scale(1);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.explosion-flash, .explosion-smoke, .explosion-electric-flash, .explosion-electric-glow, .balloon-pop, .balloon-pop-smoke {
+	transform-origin: center;
+	z-index: 5;
+}
+
+/* Анимация взрыва */
+@keyframes explosion-flash-animation {
+	0% {
+		transform: translate(0%, 0%) scale(0.1);
+		opacity: 1.0;
+	}
+	20% {
+		transform: translate(0%, 0%) scale(1.5);
+		opacity: 0.9;
+	}
+	50% {
+		transform: translate(0%, 0%) scale(2.0);
+		opacity: 0.5;
+	}
+	100% {
+		transform: translate(0%, 0%) scale(0);
+		opacity: 0;
+	}
+}
+
+@keyframes explosion-smoke-animation {
+	0% {
+		transform: translate(0%, 0%) scale(1.0);
+		background-color: rgba(0, 0, 0, 0.8);
+		opacity: 0.0;
+	}
+	30% {
+		transform: translate(0%, 0%) scale(1.5);
+		background-color: rgba(0, 0, 0, 0.5);
+		opacity: 0.5;
+	}
+	50% {
+		transform: translate(0%, 0%) scale(2.5);
+		background-color: rgba(0, 0, 0, 0.25);
+		opacity: 0.7;
+	}
+	100% {
+		transform: translate(0%, 0%) scale(4);
+		opacity: 0;
+	}
+}
+
+/* Анимация электрического взрыва */
+@keyframes electric-flash-animation {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1.0;
+    }
+	24% {
+        transform: scale(1.2) rotate(0deg);
+        opacity: 0.8;
+    }
+    25% {
+        transform: scale(1.2) rotate(45deg);
+        opacity: 0.8;
+    }
+	49% {
+        transform: scale(1.5) rotate(45deg);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.5) rotate(-45deg);
+        opacity: 0.7;
+    }
+    74% {
+        transform: scale(1.1) rotate(-45deg);
+        opacity: 0.6;
+    }
+	75% {
+        transform: scale(1.1) rotate(90deg);
+        opacity: 0.6;
+    }
+	89% {
+        transform: scale(2.0) rotate(90deg);
+        opacity: 0.6;
+    }
+	90% {
+        transform: scale(2.0) rotate(45deg);
+        opacity: 0.6;
+    }
+    94% {
+        transform: scale(1.5) rotate(45deg);
+        opacity: 0.5;
+    }
+	95% {
+        transform: scale(1.5) rotate(-90deg);
+        opacity: 0.5;
+    }
+	99% {
+        transform: scale(2.5) rotate(-90deg);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+@keyframes electric-glow-animation {
+    0% {
+        transform: scale(1);
+		background-color: rgba(0, 155, 255, 0.1);
+        opacity: 1.0;
+    }
+	25% {
+        transform: scale(1.25);
+		background-color: rgba(0, 155, 255, 0.15);
+        opacity: 0.9;
+    }
+	75% {
+        transform: scale(1.5);
+		background-color: rgba(0, 155, 255, 0.15);
+        opacity: 0.8;
+    }
+    85% {
+        transform: scale(2.0);
+		background-color: rgba(0, 155, 255, 0.15);
+        opacity: 0.7;
+    }
+	90% {
+        transform: scale(2.0);
+		background-color: rgba(155, 155, 255, 0.25);
+        opacity: 0.7;
+    }
+	95% {
+        transform: scale(1.5);
+		background-color: rgba(255, 255, 255, 0.5);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(10.0);
+		background-color: rgba(255, 255, 255, 0.15);
+        opacity: 0;
+    }
+}
+
+/* Анимация лопающегося шарика */
+@keyframes balloon-pop-animation {
+    0% {
+        transform: scale(1.0);
+        opacity: 1.0;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.8;
+    }
+    75% {
+        transform: scale(2.0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+@keyframes balloon-pop-smoke-animation {
+    0% {
+        transform: scale(1.0);
+        background-color: rgba(128, 128, 128, 0.5);
+        opacity: 0.0;
+    }
+    50% {
+        transform: scale(2.0);
+        background-color: rgba(128, 128, 128, 0.3);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(4.0);
+        opacity: 0;
+    }
+}
+
+.explosion-flash.animate {
+	animation: explosion-flash-animation 0.25s ease-out;
+}
+
+.explosion-smoke.animate {
+	animation: explosion-smoke-animation 1.5s ease-out;
+}
+
+.explosion-electric-flash.animate {
+	animation: electric-flash-animation 2.5s ease-out;
+}
+
+.explosion-electric-glow.animate {
+	animation: electric-glow-animation 3.0s ease-out;
+}
+
+.balloon-pop.animate {
+    animation: balloon-pop-animation 0.5s ease-out;
+}
+
+.balloon-pop-smoke.animate {
+    animation: balloon-pop-smoke-animation 1s ease-out;
+}

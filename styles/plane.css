@@ -1,0 +1,71 @@
+.plane {
+	position: absolute; /* Позволяет управлять координатами через left/top */
+	width: 200px;
+	height: 100px;
+	z-index: 4;
+}
+
+.plane-body {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+}
+.plane-body::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  background-color: #66b2ff;
+  clip-path: polygon(20.0% 49.5%, 30.0% 95%, 100% 60.0%);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.plane-wings {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+}
+.plane-wings::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  background-color: #0088cc;
+  clip-path: polygon(20.0% 49.5%, 25.0% 25.0%, 100% 60.0%);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.plane-wings::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  background-color: #0088cc;
+  clip-path: polygon(0% 95.0%, 15.0% 65.0%, 100% 60.0%);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.airflow {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background: radial-gradient(circle, rgba(255,255,255,0.7), rgba(0,0,0,0) 70%);
+	border-radius: 50%;
+	opacity: 0.5;
+	z-index: 1;
+	animation: airflow-animation 0.2s linear infinite;
+}
+
+.plane-wings, .plane-body {
+	transform: translate(-5%, -27%);
+}
+
+@keyframes airflow-animation {
+	0% {
+		transform: translate(20%, 20%) translateX(0px) scale(1);
+		opacity: 0.7;
+	}
+	100% {
+		transform: translate(20%, 20%) translateX(-200px) scale(1.5);
+		opacity: 0;
+	}
+}

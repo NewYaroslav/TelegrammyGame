@@ -1,0 +1,94 @@
+#game-hud {
+	position: absolute;
+	bottom: 32px;
+	left: 32px;
+	color: white;
+	font-size: 24px;
+	font-family: 'GTAPricedown';
+	background-color: rgba(0, 0, 0, 0.7);
+	padding: 5px 10px;
+	border-radius: 5px;
+	z-index: 10;
+}
+
+.hud-heart {
+	display: inline-block;
+	vertical-align: middle;
+	width: 24px;
+	height: 24px;
+	margin-left: 5px;
+	background-image: url('/images/hud_heart.png');
+	background-size: cover;
+	animation: hud-heart-float 2s ease-in-out infinite;
+}
+
+@keyframes hud-heart-float {
+	0% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-5px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+#ammo-count {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	color: white;
+	font-size: 24px;
+	font-family: 'GTAPricedown';
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 5px 10px;
+	border-radius: 5px;
+	z-index: 10;
+}
+
+/*--------------*/
+#hero-dialogue {
+    display: inline-block;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	/*border: 1px solid red;*/
+}
+
+#hero-image {
+    display: block;
+	width: 400px;
+	height: 400px;
+}
+
+.dialogue-bubble {
+    position: absolute;
+    bottom: 100%;
+    left: 30%;
+    transform: translateX(-50%);
+    max-width: 400px;
+    padding: 10px;
+    background: #fefefe;
+    color: #000000;
+    border-radius: 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    font-family: 'ComicSansMS', sans-serif;
+	font-size: 24px;
+	text-align: center;
+    
+}
+
+.dialogue-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; /* Положение стрелочки ниже пузыря */
+    left: 20%; /* Расположение стрелочки слева от пузыря */
+    transform: translateX(0);
+    width: 0;
+    height: 0;
+    border-left: 24px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 24px solid #fefefe;
+}

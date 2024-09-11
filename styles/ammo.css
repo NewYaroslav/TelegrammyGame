@@ -1,0 +1,21 @@
+.cash-ammo {
+	position: absolute;
+	width: 120px;
+	height: 50px;
+}
+
+.cash-ammo-300-bucks {
+	position: absolute;
+	width: 120px;
+	height: 50px;
+	background-image: url('/images/300_bucks.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	border: none;
+	filter: drop-shadow(0 0 20px rgba(255, 240, 153, 0.5)); 
+}
+
+.cash-ammo, .cash-ammo-300-bucks {
+	transform: translate(0%, 0%);
+	z-index: 2;
+}

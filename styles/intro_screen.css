@@ -1,0 +1,34 @@
+#intro-screen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	font-family: 'GTAPricedown';
+	background: rgba(0, 0, 0, 0.8);
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	z-index: 1000; /* Чтобы заставка была поверх всех других элементов */
+}
+
+.intro-content {
+	padding: 20px;
+	border: 2px solid white;
+	border-radius: 10px;
+	background: rgba(0, 0, 0, 0.7);
+}
+
+.intro-content h1 {
+	margin: 0;
+	font-size: 48px;
+	color: red;
+}
+
+.intro-content p {
+	margin: 10px 0;
+	font-size: 24px;
+}
+		
