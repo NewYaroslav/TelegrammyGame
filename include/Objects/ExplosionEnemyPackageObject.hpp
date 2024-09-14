@@ -2,18 +2,24 @@
 
 #include "BaseObject.hpp"
 
+#define EXPLOSION_ENEMY_PACKAGE_WEAK_WIDTH      60
+#define EXPLOSION_ENEMY_PACKAGE_WEAK_HEIGHT     100
+#define EXPLOSION_ENEMY_PACKAGE_WEAK_TIME       15
+#define EXPLOSION_ENEMY_PACKAGE_WEAK_SPEED      0
+
 class ExplosionEnemyPackageObject final : public BaseObject {
 public:
 
     ExplosionEnemyPackageObject(
-            const int32_t& id,
             const int32_t& x,
             const int32_t& y,
-            const int32_t& width,
-            const int32_t& height,
-            const int32_t& time,
-            const int32_t& speed) :
-        BaseObject(id, x, y, width, height, time, speed, std::string()) {
+            const float& angle) :
+        BaseObject(x, y,
+            EXPLOSION_ENEMY_PACKAGE_WEAK_WIDTH,
+            EXPLOSION_ENEMY_PACKAGE_WEAK_HEIGHT,
+            EXPLOSION_ENEMY_PACKAGE_WEAK_TIME,
+            EXPLOSION_ENEMY_PACKAGE_WEAK_SPEED,
+            angle) {
         play_explosion();
     }
 
@@ -43,12 +49,14 @@ public:
             const obj_y = $2;;
             const obj_width  = $3;
             const obj_height = $4;
-            const is_debug = $5;
+            const obj_angle = $5;
+            const is_debug = $6;
 
             const existing_explosion = document.getElementById(`obj_${obj_id}`);
             if (existing_explosion) {
                 existing_explosion.style.left = `${obj_x - obj_width / 2}px`;
                 existing_explosion.style.top = `${obj_y - obj_height / 2}px`;
+                existing_explosion.style.transform = `rotate(${obj_angle}deg)`;
             } else {
                 const explosion = document.createElement('div');
                 explosion.className = 'explosion';
@@ -57,6 +65,7 @@ public:
                 explosion.style.height = `${obj_height}px`;
                 explosion.style.left = `${obj_x - obj_width / 2}px`;
                 explosion.style.top = `${obj_x - obj_height / 2}px`;
+                explosion.style.transform = `rotate(${obj_angle}deg)`;
 
                 const balloon_pop = document.createElement('div');
                 balloon_pop.className = 'balloon-pop';
@@ -101,7 +110,7 @@ public:
                 document.getElementById('game-area').appendChild(box);
             }
         },
-        id, x, y, std::max(width, height), std::max(width, height), (bool)GAME_DEBUG);
+        id, x, y, std::max(width, height), std::max(width, height), angle, (bool)GAME_DEBUG);
     }
 
 private:

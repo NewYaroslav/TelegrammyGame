@@ -2,19 +2,24 @@
 
 #include "BaseObject.hpp"
 
+#define DOLLAR_BULLET_WIDTH     70
+#define DOLLAR_BULLET_HEIGHT    25
+#define DOLLAR_BULLET_HP        1
+#define DOLLAR_BULLET_SPEED     15
+
 class BulletDollarObject final : public BaseObject {
 public:
 
     BulletDollarObject(
-            const int32_t& id,
             const int32_t& x,
             const int32_t& y,
-            const int32_t& width,
-            const int32_t& height,
-            const int32_t& hp,
-            const int32_t& speed,
             const std::function<void(BaseObject*, const ObjectType&)> on_spawn) :
-        BaseObject(id, x, y, width, height, hp, speed, std::string(), on_spawn) {
+        BaseObject(x, y,
+            DOLLAR_BULLET_WIDTH,
+            DOLLAR_BULLET_HEIGHT,
+            DOLLAR_BULLET_HP,
+            DOLLAR_BULLET_SPEED,
+            0.0f,std::string(),on_spawn) {
     }
 
     virtual ~BulletDollarObject() {}
@@ -29,8 +34,10 @@ public:
 
     void damage(const int32_t& change_hp) override final {
         if (hp > 0) {
+            std::cout << "-damage" << std::endl;
             hp -= std::abs(change_hp);
             if (hp <= 0) {
+                std::cout << "-damage-2" << std::endl;
                 if (on_spawn) on_spawn(this, ObjectType::EXPLOSION_SMALL);
             }
         }

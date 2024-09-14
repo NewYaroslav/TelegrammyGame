@@ -2,19 +2,19 @@
 
 #include "BaseObject.hpp"
 
-class ExplosionObject final : public BaseObject {
+#define EXPLOSION_TIME          20
+#define EXPLOSION_SPEED         0
+
+class ExplosionObject : public BaseObject {
 public:
 
     ExplosionObject(
-                const int32_t& id,
                 const int32_t& x,
                 const int32_t& y,
-                const int32_t& width,
-                const int32_t& height,
-                const int32_t& time,
-                const int32_t& speed,
+                const int32_t& size,
                 const int32_t& power = 0) :
-            BaseObject(id, x, y, width, height, time, speed, std::string()),
+            BaseObject(x, y, size, size,
+                EXPLOSION_TIME, EXPLOSION_SPEED),
             m_power(power) {
         play_explosion();
     }
@@ -142,4 +142,43 @@ private:
         }, m_power);
     }
 
+};
+
+class ExplosionSmallObject final : public ExplosionObject {
+public:
+
+    ExplosionSmallObject(
+                const int32_t& x,
+                const int32_t& y,
+                const int32_t& size) :
+        ExplosionObject(x, y, size, 1) {
+    }
+
+    virtual ~ExplosionSmallObject() {};
+};
+
+class ExplosionMediumObject final : public ExplosionObject {
+public:
+
+    ExplosionMediumObject(
+                const int32_t& x,
+                const int32_t& y,
+                const int32_t& size) :
+        ExplosionObject(x, y, size, 2) {
+    }
+
+    virtual ~ExplosionMediumObject() {};
+};
+
+class ExplosionLargeObject final : public ExplosionObject {
+public:
+
+    ExplosionLargeObject(
+                const int32_t& x,
+                const int32_t& y,
+                const int32_t& size) :
+        ExplosionObject(x, y, size, 3) {
+    }
+
+    virtual ~ExplosionLargeObject() {};
 };

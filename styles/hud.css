@@ -66,9 +66,9 @@
 .dialogue-bubble {
     position: absolute;
     bottom: 100%;
-    left: 30%;
+    left: 15%;
     transform: translateX(-50%);
-    max-width: 400px;
+    max-width: 500px;
     padding: 10px;
     background: #fefefe;
     color: #000000;

@@ -1,27 +1,31 @@
 #pragma once
 
 #include "BaseObject.hpp"
-#include "../Utils/LowPassFilter.hpp"
+#include "..\Utils\LowPassFilter.hpp"
 #include <random>
 #include <chrono>
 #include <algorithm>
 
-class EnemyPackageWeakObject final : public BaseObject {
+#define ENEMY_PACKAGE_WEAK_WIDTH    60
+#define ENEMY_PACKAGE_WEAK_HEIGHT   100
+#define ENEMY_PACKAGE_WEAK_HP       1
+#define ENEMY_PACKAGE_WEAK_SPEED    -5
+
+class EnemyPackageWeakObject : public BaseObject {
 public:
 
     EnemyPackageWeakObject(
-                const int32_t& id,
                 const int32_t& x,
                 const int32_t& y,
-                const int32_t& width,
-                const int32_t& height,
-                const int32_t& hp,
-                const int32_t& speed,
+                const float& angle,
                 const std::function<void(BaseObject*, const ObjectType&)> on_spawn = nullptr) :
-            BaseObject(id, x, y, width, height, hp, speed, "enemy-package-weak", on_spawn),
-            filter_x(5.0, 0.05), filter_y(5.0, 0.05), filter_a(5.0, 0.05) {
-        auto seed = std::chrono::system_clock::now().time_since_epoch().count();
-        m_rnd_gen = std::mt19937(seed);
+            BaseObject(x, y,
+                ENEMY_PACKAGE_WEAK_WIDTH,
+                ENEMY_PACKAGE_WEAK_HEIGHT,
+                ENEMY_PACKAGE_WEAK_HP,
+                ENEMY_PACKAGE_WEAK_SPEED,
+                angle, "enemy-package-weak", on_spawn),
+            m_filter_x(5.0, 0.05), m_filter_y(5.0, 0.05), m_filter_a(5.0, 0.05) {
     }
 
     virtual ~EnemyPackageWeakObject() {}
@@ -30,7 +34,7 @@ public:
         return ObjectCategory::ENEMY;
     }
 
-    ObjectType get_type() override final {
+    ObjectType get_type() override {
         return ObjectType::ENEMY_PACKAGE_WEAK;
     }
 
@@ -38,7 +42,7 @@ public:
         return (x >= -width);
     }
 
-    void damage(const int32_t& change_hp) override final {
+    void damage(const int32_t& change_hp) override {
         if (hp > 0) {
             hp -= std::abs(change_hp);
             if (hp <= 0) {
@@ -47,26 +51,25 @@ public:
         }
     }
 
-    void update() override final {
-        GameArea& game_area = GameArea::get_instance();
-        const int32_t area_height = game_area.get_height();
+    void update() override {
+        ResourceManager& instance = ResourceManager::get_instance();
+        const int32_t area_height = instance.get_height();
 
         static const double pi2 = 2.0 * std::acos(-1);
-        std::uniform_real_distribution<> dist_angle(0.0, pi2);
 
         // Выбираем случайное направление для движения
-        double rnd_angle = dist_angle(m_rnd_gen); // Угол в диапазоне [0, 2π]
+        double rnd_angle = instance.random_chance() * pi2; // Угол в диапазоне [0, 2π]
         double dx = std::abs(speed) * std::cos(rnd_angle);
         double dy = 2 * std::abs(speed) * std::sin(rnd_angle);
 
         // Обновляем позицию частицы
-        x += filter_x.update(speed + dx);
-        y += filter_y.update(dy);
+        x += m_filter_x.update(speed + dx);
+        y += m_filter_y.update(dy);
 
         if (dy >= 0) {
-            angle += filter_a.update(10.0f * rnd_angle/pi2);
+            angle += m_filter_a.update(10.0f * rnd_angle/pi2);
         } else {
-            angle += filter_a.update(-10.0f * rnd_angle/pi2);
+            angle += m_filter_a.update(-10.0f * rnd_angle/pi2);
         }
 
         const int32_t min_height = area_height - height;
@@ -75,19 +78,8 @@ public:
         if (y <= max_height) y = max_height;
     }
 
-private:
-    std::mt19937 m_rnd_gen;
-    LowPassFilter<double> filter_x;
-    LowPassFilter<double> filter_y;
-    LowPassFilter<double> filter_a;
-
-    void play_explosion() {
-        EM_ASM({
-            const shootSound = document.getElementById('sound-explosion-bubble');
-            shootSound.currentTime = 0;
-            shootSound.play().catch(function(error) {
-                console.log("Error playing music: " + error);
-            });
-        });
-    }
+protected:
+    LowPassFilter<double> m_filter_x;
+    LowPassFilter<double> m_filter_y;
+    LowPassFilter<double> m_filter_a;
 };

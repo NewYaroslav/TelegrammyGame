@@ -2,18 +2,24 @@
 
 #include "BaseObject.hpp"
 
+#define CLOUD_WIDTH             400
+#define CLOUD_HEIGHT            200
+#define CLOUD_SPEED             -10
+#define CLOUD_HP                1
+
 class CloudObject final : public BaseObject {
 public:
 
     CloudObject(
-            const int32_t& id,
             const int32_t& x,
             const int32_t& y,
-            const int32_t& width,
-            const int32_t& height,
             const int32_t& speed,
             const float& scale) :
-        BaseObject(id, x, y, width, height, 1, speed, std::string()),
+        BaseObject(x, y,
+            CLOUD_WIDTH,
+            CLOUD_HEIGHT,
+            CLOUD_HP,
+            speed),
         m_scale(scale) {
     }
 

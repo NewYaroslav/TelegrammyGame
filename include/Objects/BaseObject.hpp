@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GameArea.hpp"
+#include "../ResourceManager.hpp"
 #include <string>
 
 enum class ObjectCategory {
@@ -21,37 +21,40 @@ enum class ObjectType {
     EXPLOSION_LARGE,
     EXPLOSION_ENEMY_RKN_WEAK,
     EXPLOSION_ENEMY_PACKAGE_WEAK,
+    EXPLOSION_ENEMY_PACKAGE_MITOSIS,
     BULLET_DOLLAR,
     ENEMY_RKN_WEAK,
+    ENEMY_RKN_MIDDLE,
     ENEMY_PACKAGE_WEAK,
+    ENEMY_PACKAGE_MITOSIS,
     CASH_AMMO_300,
 };
 
 class BaseObject {
 public:
-    int32_t     id = 0;
+    int32_t     id;
     int32_t     x;
     int32_t     y;
     int32_t     width;
     int32_t     height;
-    int32_t     hp = 0;
-    int32_t     speed = 0;
-    float       angle = 0;
+    int32_t     hp;
+    int32_t     speed;
+    float       angle;
     std::string class_name;
     std::function<void(BaseObject*, const ObjectType&)> on_spawn;
 
     BaseObject(
-            const int32_t& id,
             const int32_t& x,
             const int32_t& y,
             const int32_t& width,
             const int32_t& height,
             const int32_t& hp = 0,
             const int32_t& speed = 0,
+            const float& angle = 0,
             const std::string& class_name = std::string(),
             const std::function<void(BaseObject*, const ObjectType&)> on_spawn = nullptr) :
-        id(id), x(x), y(y), width(width), height(height), hp(hp), speed(speed),
-        class_name(class_name), on_spawn(on_spawn) {
+        id(ResourceManager::get_instance().get_object_id()), x(x), y(y), width(width), height(height), hp(hp), speed(speed),
+        angle(angle), class_name(class_name), on_spawn(on_spawn) {
     }
 
     virtual ~BaseObject() {
@@ -73,8 +76,8 @@ public:
     }
 
     virtual bool is_online() {
-        GameArea& game_area = GameArea::get_instance();
-        const int32_t max_width = game_area.get_width();
+        ResourceManager& instance = ResourceManager::get_instance();
+        const int32_t max_width = instance.get_width();
         return (x >= -width && x <= (max_width + width));
     }
 
@@ -115,8 +118,6 @@ public:
                 obj.id = `obj_${obj_id}`;
                 obj.style.left = `${obj_x - obj_width / 2}px`;
                 obj.style.top = `${obj_y - obj_height / 2}px`;
-                //obj.style.width = `${obj_width}px`;
-                //obj.style.height = `${obj_height}px`;
                 obj.style.transform = `rotate(${obj_angle}deg)`;
 
                 document.getElementById('game-area').appendChild(obj);

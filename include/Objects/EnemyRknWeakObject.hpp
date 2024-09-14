@@ -2,19 +2,24 @@
 
 #include "BaseObject.hpp"
 
+#define ENEMY_RKN_WEAK_WIDTH    80
+#define ENEMY_RKN_WEAK_HEIGHT   80
+#define ENEMY_RKN_WEAK_HP       1
+#define ENEMY_RKN_WEAK_SPEED    -5
+
 class EnemyRknWeakObject final : public BaseObject {
 public:
 
     EnemyRknWeakObject(
-            const int32_t& id,
             const int32_t& x,
             const int32_t& y,
-            const int32_t& width,
-            const int32_t& height,
-            const int32_t& hp,
-            const int32_t& speed,
             const std::function<void(BaseObject*, const ObjectType&)> on_spawn = nullptr) :
-        BaseObject(id, x, y, width, height, hp, speed, "enemy-rkn-weak", on_spawn) {
+        BaseObject(x, y,
+            ENEMY_RKN_WEAK_WIDTH,
+            ENEMY_RKN_WEAK_HEIGHT,
+            ENEMY_RKN_WEAK_HP,
+            ENEMY_RKN_WEAK_SPEED,
+            0, "enemy-rkn-weak", on_spawn) {
     }
 
     virtual ~EnemyRknWeakObject() {}

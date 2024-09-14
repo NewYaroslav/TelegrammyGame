@@ -2,18 +2,24 @@
 
 #include "BaseObject.hpp"
 
+#define CASH_AMMO_300_WIDTH     120
+#define CASH_AMMO_300_HEIGHT    25
+#define CASH_AMMO_300_HP        300
+#define CASH_AMMO_300_SPEED     4
+
 class CashAmmo300Object final : public BaseObject {
 public:
 
     CashAmmo300Object(
-            const int32_t& id,
             const int32_t& x,
-            const int32_t& y,
-            const int32_t& width,
-            const int32_t& height,
-            const int32_t& hp,
-            const int32_t& speed) :
-        BaseObject(id, x, y, width, height, hp, speed, "cash-ammo-300-bucks"),
+            const int32_t& y) :
+        BaseObject(x, y,
+            CASH_AMMO_300_WIDTH,
+            CASH_AMMO_300_HEIGHT,
+            CASH_AMMO_300_HP,
+            CASH_AMMO_300_SPEED,
+            0,
+            "cash-ammo-300-bucks"),
         m_pos_x(x) {
     }
 
@@ -32,7 +38,8 @@ public:
     }
 
     bool is_online() override final {
-        const int32_t area_height = GameArea::get_instance().get_height();
+        ResourceManager& instance = ResourceManager::get_instance();
+        const int32_t area_height = instance.get_height();
         return (y < (area_height + height));
     }
 

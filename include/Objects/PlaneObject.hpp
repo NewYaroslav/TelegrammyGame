@@ -2,20 +2,25 @@
 
 #include "BaseObject.hpp"
 
+#define PLANE_WIDTH             180
+#define PLANE_HEIGHT            60
+#define PLANE_HP                1
+#define PLANE_SPEED             15
+
 class PlaneObject final : public BaseObject {
 public:
     int32_t current_ammo = 300;
 
     PlaneObject(
-            const int32_t& id,
             const int32_t& x,
             const int32_t& y,
-            const int32_t& width,
-            const int32_t& height,
-            const int32_t& hp,
-            const int32_t& speed,
-            const std::function<void(BaseObject*, const ObjectType&)> on_spawn) :
-        BaseObject(id, x, y, width, height, hp, speed, std::string(), on_spawn),
+            const std::function<void(BaseObject*, const ObjectType&)>& on_spawn) :
+        BaseObject(x, y,
+            PLANE_WIDTH,
+            PLANE_HEIGHT,
+            PLANE_HP,
+            PLANE_SPEED,
+            0.0f, std::string(), on_spawn),
         m_plane_x(x), m_plane_y(y) {
     }
 
@@ -44,12 +49,11 @@ public:
         return hp <= 0;
     }
 
-    template<class CallbackType>
-    void handle_input(const int& ch, const bool& is_key_press, CallbackType callback) {
-        GameArea& game_area = GameArea::get_instance();
+    void handle_input(const int& ch, const bool& is_key_press) {
+        ResourceManager& instance = ResourceManager::get_instance();
 
-        const int32_t max_width = game_area.get_width();
-        const int32_t max_height = game_area.get_height();
+        const int32_t max_width = instance.get_width();
+        const int32_t max_height = instance.get_height();
 
         switch (ch) {
             case 'a':
@@ -112,8 +116,8 @@ public:
 
     void update() override final {
         if (hp <= 0) {
-            const int32_t min_height = 3 * GameArea::get_instance().get_height() / 4;
-            const int32_t max_height = 1 * GameArea::get_instance().get_height() / 6;
+            const int32_t min_height = 3 * ResourceManager::get_instance().get_height() / 4;
+            const int32_t max_height = 1 * ResourceManager::get_instance().get_height() / 6;
 
             static const double period = 2.5;
             static const double sin_step = 2.0 * std::acos(-1) / period;

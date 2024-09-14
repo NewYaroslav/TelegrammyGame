@@ -2,18 +2,22 @@
 
 #include "BaseObject.hpp"
 
+#define EXPLOSION_ENEMY_RKN_WEAK_WIDTH    80
+#define EXPLOSION_ENEMY_RKN_WEAK_HEIGHT   80
+#define EXPLOSION_ENEMY_RKN_WEAK_TIME       60
+#define EXPLOSION_ENEMY_RKN_WEAK_SPEED      -2
+
 class ExplosionEnemyRknWeakObject final : public BaseObject {
 public:
 
     ExplosionEnemyRknWeakObject(
-            const int32_t& id,
             const int32_t& x,
-            const int32_t& y,
-            const int32_t& width,
-            const int32_t& height,
-            const int32_t& time,
-            const int32_t& speed) :
-            BaseObject(id, x, y, width, height, time, speed, std::string()) {
+            const int32_t& y) :
+            BaseObject(x, y,
+                EXPLOSION_ENEMY_RKN_WEAK_WIDTH,
+                EXPLOSION_ENEMY_RKN_WEAK_HEIGHT,
+                EXPLOSION_ENEMY_RKN_WEAK_TIME,
+                EXPLOSION_ENEMY_RKN_WEAK_SPEED) {
         play_explosion();
     }
 
